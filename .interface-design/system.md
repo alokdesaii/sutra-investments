@@ -51,7 +51,7 @@ Theme is `html[data-theme]`, set before paint by an inline script in `layout.tsx
 - Sticky top bar (56px, blurred `--bg`): logo · tabs (underline in `--accent`) · NSE status · theme toggle.
 - Page = hero (eyebrow date/count → headline with serif accent → one-sentence summary) → sections.
 - Section = `Section` component (`app/section.tsx`): title, one-line purpose, optional action on the right.
-- Pages: Overview (`/`), Investment Recommendations (`/ideas`, rules in `app/horizons.ts`), IPOs (`/ipo`, data + signal rules in `app/ipo.ts`), News impact (`/news`).
+- Pages: Overview (`/`), Instruments (`/instruments` hub → `/instruments/[type]` guide → `/instruments/[type]/[slug]` detail; guides in `app/types.ts`, maths in `app/analytics.ts`), Investment Recommendations (`/ideas`, rules in `app/horizons.ts`), IPOs (`/ipo`, data + signal rules in `app/ipo.ts`), News impact (`/news`).
 - Rule-based screens state their rules up front (goal + numbered principles), show ✓ strengths / ! cautions per item,
   and list excluded items with the reason. Never phrase as personal advice.
 - Master–detail: table `xl:col-span-8` + sticky detail `xl:col-span-4`; below xl the detail stacks and row-select scrolls to it.

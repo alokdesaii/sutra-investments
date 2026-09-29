@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { loadInstruments } from "../data";
 import { ago, loadHeadlines, themes } from "../news";
 import Section from "../section";
@@ -91,7 +92,7 @@ export default async function News() {
                           const i = byName.get(name);
                           return (
                             <li key={name} className="flex items-baseline justify-between gap-3 border-b border-line py-2 last:border-b-0">
-                              <span>{name}</span>
+                              {i ? <Link href={`/instruments/${i.type}/${i.slug}`} className="hover:text-accent">{name}</Link> : <span>{name}</span>}
                               {i && (
                                 <span className="meta">
                                   1 year <span className={`text-sm font-medium ${i.ret1y < 0 ? "text-down" : "text-up"}`}>{pct(i.ret1y)}</span>

@@ -4,7 +4,7 @@ import { useState } from "react";
 const DAY = 86_400_000;
 export const trendColor = (data: number[]) => (data[data.length - 1] >= data[0] ? "var(--up)" : "var(--down)");
 
-function path(data: number[], w: number, h: number, pad = 2) {
+export function path(data: number[], w: number, h: number, pad = 2) {
   const min = Math.min(...data), max = Math.max(...data);
   const pts = data.map((v, i) => [(i / (data.length - 1)) * w, h - pad - ((v - min) / (max - min || 1)) * (h - pad * 2)] as const);
   return { pts, d: pts.map(([x, y], i) => `${i ? "L" : "M"}${x.toFixed(1)},${y.toFixed(1)}`).join("") };

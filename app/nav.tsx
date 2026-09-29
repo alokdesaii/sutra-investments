@@ -7,6 +7,7 @@ import ThemeToggle from "./theme-toggle";
 
 const links: { href: string; label: string; short?: string }[] = [
   { href: "/", label: "Overview" },
+  { href: "/instruments", label: "Instruments" },
   { href: "/ideas", label: "Investment Recommendations", short: "Recommendations" },
   { href: "/ipo", label: "IPOs" },
   { href: "/news", label: "News impact" },
@@ -48,7 +49,7 @@ export default function Nav() {
         </Link>
         <nav className="-mb-px flex min-w-0 gap-4 overflow-x-auto sm:gap-6" aria-label="Main">
           {links.map((l) => (
-            <Link key={l.href} href={l.href} aria-current={path === l.href ? "page" : undefined} className="tab shrink-0 whitespace-nowrap">
+            <Link key={l.href} href={l.href} aria-current={(l.href === "/" ? path === "/" : path.startsWith(l.href)) ? "page" : undefined} className="tab shrink-0 whitespace-nowrap">
               {l.short ? (
                 <>
                   <span className="hidden md:inline">{l.label}</span>

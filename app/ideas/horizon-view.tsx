@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 import { Spark } from "../charts";
 import type { Instrument } from "../data";
@@ -77,7 +78,7 @@ export default function HorizonView({ instruments }: { instruments: Instrument[]
                 <div className="grid gap-5 p-5 sm:grid-cols-[1fr_auto]">
                   <div>
                     <p className="eyebrow text-accent">Top fit</p>
-                    <p className="mt-1 text-lg font-semibold tracking-tight">{lead.name}</p>
+                    <Link href={`/instruments/${lead.type}/${lead.slug}`} className="mt-1 block text-lg font-semibold tracking-tight hover:text-accent">{lead.name}</Link>
                     <p className="meta">{lead.category}</p>
                   </div>
                   <div className="sm:text-right">
@@ -92,7 +93,7 @@ export default function HorizonView({ instruments }: { instruments: Instrument[]
                     {rest.map((i) => (
                       <li key={i.name} className="flex items-center justify-between gap-4 border-b border-line px-5 py-3 last:border-b-0">
                         <div className="min-w-0">
-                          <p className="truncate font-medium">{i.name}</p>
+                          <Link href={`/instruments/${i.type}/${i.slug}`} className="block truncate font-medium hover:text-accent">{i.name}</Link>
                           <p className="meta truncate">{h.reasons(i)[0].text}</p>
                         </div>
                         <div className="shrink-0 text-right">

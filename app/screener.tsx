@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 import { PriceChart, Spark } from "./charts";
 import { WEIGHTS, type Instrument, type Kind, type Risk } from "./data";
@@ -63,6 +64,7 @@ function Detail({ i, rank, total, news, themeLabels, exposure }: { i: Instrument
         <p className="eyebrow">Rank {rank} of {total} · {i.kind}</p>
         <h3 className="mt-1.5 text-xl font-semibold tracking-tight">{i.name}</h3>
         <p className="meta">{i.category}</p>
+        <Link href={`/instruments/${i.type}/${i.slug}`} className="btn-ghost mt-3">Full details, returns and SIP calculator <span aria-hidden>→</span></Link>
       </div>
 
       <div className="px-5 pt-4 pb-5">
