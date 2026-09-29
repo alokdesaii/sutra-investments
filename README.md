@@ -4,6 +4,7 @@ Markets, threaded to your money. A personal market dashboard for Indian investor
 
 - **Overview**: benchmarks, a ranked and searchable watchlist with an interactive price chart, and the latest headlines.
 - **Investment Recommendations**: rule-based screens of the watchlist for short-term and long-term horizons, with the reasons behind each fit.
+- **IPOs**: open, closed and recently listed IPOs from NSE with rule-based demand signals, pre-IPO filings news, and a before-you-apply checklist.
 - **News impact**: India and global headlines grouped by market theme, with how each theme usually moves markets and where the watchlist is exposed.
 
 For information only, not investment advice.
@@ -15,12 +16,14 @@ No API keys needed. Refreshed every 15 minutes.
 - Mutual fund NAVs: AMFI via [mfapi.in](https://www.mfapi.in)
 - NSE prices: Yahoo Finance chart API (unofficial)
 - Headlines: Economic Times and Google News RSS
+- IPOs: NSE public issue data (unofficial endpoints)
 
 ## Customise
 
 - Watchlist: `app/data.ts` (`watchlist`)
 - Ranking weights: `app/data.ts` (`WEIGHTS`)
 - Horizon rules and assumptions: `app/horizons.ts`
+- IPO data and demand-signal rules: `app/ipo.ts`
 - News themes and keywords: `app/news.ts`
 - Design system: `.interface-design/system.md`
 
@@ -30,4 +33,5 @@ No API keys needed. Refreshed every 15 minutes.
 npm install
 npm run dev
 node app/horizons.check.ts   # rules self-check
+node app/ipo.check.ts        # IPO parsing and signal self-check
 ```
