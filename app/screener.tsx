@@ -126,7 +126,19 @@ function Detail({ i, rank, total, news, themeLabels, exposure }: { i: Instrument
   );
 }
 
-export default function Screener(props: { instruments: Instrument[]; news: NewsItem[]; themeLabels: Record<string, string>; exposure: Record<string, string[]> }) {
+// Watchlist type filter → whole-market browser type (see universe.kindKey).
+const marketKind: Record<string, { key: string; label: string }> = {
+  All: { key: "all", label: "instruments" },
+  Stock: { key: "stocks", label: "stocks" },
+  "Mutual Fund": { key: "funds", label: "mutual funds" },
+  ETF: { key: "etfs", label: "ETFs" },
+  Bond: { key: "debt", label: "debt funds" },
+  Gold: { key: "gold", label: "gold and silver" },
+};
+const PAGE = 20;
+
+export default function Screener(props: { instruments: Instrument[]; news: NewsItem[]; themeLabels: Record<string, string>; exposure: Record<string, string[]>; marketCounts: Record<string, number> }) {
+  const [showAll, setShowAll] = useState(false);
   const [kind, setKind] = useState<(typeof kinds)[number]>("All");
   const [risk, setRisk] = useState<(typeof risks)[number]>("All");
   const [query, setQuery] = useState("");
@@ -179,7 +191,7 @@ export default function Screener(props: { instruments: Instrument[]; news: NewsI
               </tr>
             </thead>
             <tbody>
-              {rows.map((i, n) => (
+              {(showAll ? rows : rows.slice(0, PAGE)).map((i, n) => (
                 <tr key={i.name} className="row rise" style={{ "--i": n } as React.CSSProperties} aria-selected={current?.name === i.name} onClick={() => select(i.name)}>
                   <td className="px-4 py-3 text-text-3">{ranked.indexOf(i) + 1}</td>
                   <td className="px-3 py-3">
@@ -203,7 +215,25 @@ export default function Screener(props: { instruments: Instrument[]; news: NewsI
             <p className="meta mt-1">Try clearing the search or choosing “All”.</p>
           </div>
         )}
-        <p className="meta border-t border-line px-4 py-2.5">Select a row for its chart, score breakdown and related news. Click a column heading to sort.</p>
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line px-4 py-2.5">
+          <p className="meta">Select a row for its chart, score breakdown and related news. Click a column heading to sort.</p>
+          <div className="flex flex-wrap items-center gap-2">
+            {rows.length > PAGE && (
+              <button onClick={() => setShowAll((v) => !v)} className="btn-ghost">
+                {showAll ? "Show top 20" : `Show all ${rows.length}`}
+              </button>
+            )}
+            {(() => {
+              const m = marketKind[kind];
+              const total = props.marketCounts[m.key];
+              return total ? (
+                <Link href={`/instruments/all?kind=${m.key}${query ? `&q=${encodeURIComponent(query)}` : ""}`} className="btn-ghost">
+                  Browse all {total.toLocaleString("en-IN")} {m.label} in the market <span aria-hidden>→</span>
+                </Link>
+              ) : null;
+            })()}
+          </div>
+        </div>
       </section>
 
       <div className="xl:col-span-4">

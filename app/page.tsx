@@ -4,6 +4,7 @@ import { loadInstruments } from "./data";
 import { ago, loadHeadlines, themes } from "./news";
 import Screener, { type NewsItem } from "./screener";
 import Section from "./section";
+import { kindKey, loadUniverse } from "./universe";
 
 export const revalidate = 900; // refetch prices and news at most every 15 minutes
 
@@ -22,7 +23,13 @@ const benchmarks = [
 ];
 
 export default async function Overview() {
-  const [{ instruments, failed }, headlines] = await Promise.all([loadInstruments(), loadHeadlines()]);
+  const [{ instruments, failed }, headlines, universe] = await Promise.all([loadInstruments(), loadHeadlines(), loadUniverse().catch(() => [])]);
+  const marketCounts: Record<string, number> = {};
+  for (const e of universe) {
+    if (e.src === "mf" && (e.plan !== "Direct" || e.option !== "Growth")) continue;
+    marketCounts.all = (marketCounts.all ?? 0) + 1;
+    marketCounts[kindKey(e)] = (marketCounts[kindKey(e)] ?? 0) + 1;
+  }
   const asOf = instruments.map((i) => i.asOf).sort().at(-1) ?? "";
   const themeLabels = Object.fromEntries(themes.map((t) => [t.id, t.label]));
   const exposure: Record<string, string[]> = {};
@@ -101,7 +108,7 @@ export default async function Overview() {
         </Section>
 
         <Section title="Your watchlist" sub="Ranked by a simple score of long-run return, recent return and how bumpy the ride was.">
-          <Screener instruments={instruments} news={news} themeLabels={themeLabels} exposure={exposure} />
+          <Screener instruments={instruments} news={news} themeLabels={themeLabels} exposure={exposure} marketCounts={marketCounts} />
           {failed.length > 0 && <p className="meta">Couldn’t load: {failed.join(", ")}. They’ll retry on the next refresh.</p>}
         </Section>
 

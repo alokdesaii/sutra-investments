@@ -20,7 +20,8 @@ const RANGES = [
 export function HistoryChart({ t, v }: { t: number[]; v: number[] }) {
   const all = zip(t, v);
   const span = (t[t.length - 1] - t[0]) / DAY;
-  const ranges = RANGES.filter((r) => (r.days === Infinity ? span > 5 * 365 + 30 : r.days <= span + 7));
+  const fit = RANGES.filter((r) => (r.days === Infinity ? span > 5 * 365 + 30 : r.days <= span + 7));
+  const ranges = fit.length ? fit : RANGES.slice(-1); // very short history: just show all of it
   const [range, setRange] = useState(ranges.find((r) => r.label === "1Y")?.label ?? ranges[ranges.length - 1].label);
   const [hover, setHover] = useState<number | null>(null);
 
