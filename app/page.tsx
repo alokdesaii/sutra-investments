@@ -65,7 +65,8 @@ export default async function Overview() {
 
       {/* Ticker: every watchlist price and its 1-year move. Pauses on hover. */}
       <div className="ticker border-y border-line bg-surface/60 py-2.5" aria-label="Watchlist prices">
-        <div className="ticker-track">
+        {/* Constant speed however long the watchlist: ~3.5s per instrument per loop. */}
+        <div className="ticker-track" style={{ animationDuration: `${Math.max(instruments.length, 10) * 3.5}s` }}>
           {[0, 1].map((copy) => (
             <ul key={copy} className="flex shrink-0" aria-hidden={copy === 1}>
               {instruments.map((i) => (

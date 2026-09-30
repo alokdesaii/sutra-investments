@@ -44,7 +44,7 @@ export default function Nav() {
   return (
     <header className="sticky top-0 z-20 border-b border-line bg-bg/80 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-[1400px] items-center gap-6 px-4 sm:gap-8 lg:px-8">
-        <Link href="/" aria-label="Sutra home">
+        <Link href="/" aria-label="Sutra home" className="flex shrink-0 items-center">
           <Logo />
         </Link>
         <nav className="no-scrollbar flex h-14 min-w-0 gap-4 overflow-x-auto overflow-y-hidden sm:gap-6" aria-label="Main">
