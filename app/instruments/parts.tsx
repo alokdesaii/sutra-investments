@@ -23,7 +23,8 @@ export function Crumbs({ items }: { items: { href?: string; label: string }[] })
 export function TypeTabs({ current }: { current?: string }) {
   return (
     <div role="navigation" aria-label="Instrument types" className="seg max-w-full overflow-x-auto">
-      <Link href="/instruments" aria-current={current ? undefined : "page"} className={`seg-link ${current ? "" : "is-on"}`}>All types</Link>
+      <Link href="/instruments" aria-current={current ? undefined : "page"} className={`seg-link ${current ? "" : "is-on"}`}>Types</Link>
+      <Link href="/instruments/all" aria-current={current === "all" ? "page" : undefined} className={`seg-link ${current === "all" ? "is-on" : ""}`}>Browse all</Link>
       {guides.map((g) => (
         <Link key={g.slug} href={`/instruments/${g.slug}`} aria-current={current === g.slug ? "page" : undefined} className={`seg-link ${current === g.slug ? "is-on" : ""}`}>
           {g.label}

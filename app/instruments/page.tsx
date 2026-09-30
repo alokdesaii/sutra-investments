@@ -26,10 +26,15 @@ export default async function Instruments() {
         <p className="eyebrow rise">{instruments.length} instruments on your watchlist</p>
         <h1 className="hero rise mt-3" style={idx(1)}>Know what <em>you’re buying</em></h1>
         <p className="rise mt-4 max-w-3xl text-[17px] leading-relaxed text-text-2 text-pretty" style={idx(2)}>
-          Each type of investment works differently: how it makes money, what can go wrong, and what it costs. Start with a
-          type, then open any instrument for its full history, risk, returns and an SIP calculator.
+          Each type of investment works differently: how it makes money, what can go wrong, and what it costs. Search the whole
+          market, or start with a type, then open any instrument for its full history, risk, returns and an SIP calculator.
         </p>
-        <div className="rise mt-6" style={idx(3)}><TypeTabs /></div>
+        <form action="/instruments/all" className="rise relative mt-6 max-w-2xl" style={idx(3)}>
+          <label className="sr-only" htmlFor="market-q">Search every stock, ETF and mutual fund</label>
+          <svg width="18" height="18" viewBox="0 0 24 24" className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-text-3" aria-hidden><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" strokeWidth="2" /><path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="2" /></svg>
+          <input id="market-q" name="q" placeholder="Search every stock, ETF and mutual fund…" className="field h-12! w-full pl-11! text-[15px]!" />
+        </form>
+        <div className="rise mt-4" style={idx(4)}><TypeTabs /></div>
       </div>
 
       <div className="mx-auto max-w-[1400px] space-y-12 px-4 pb-10 lg:px-8">

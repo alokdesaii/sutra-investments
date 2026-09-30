@@ -5,7 +5,7 @@ import { at, DAY, type Point } from "./analytics";
 export type Kind = "Stock" | "Mutual Fund" | "ETF" | "Bond" | "Gold";
 export type Risk = "Low" | "Medium" | "High";
 
-type Source = { name: string; kind: Kind; category: string; about: string } & ({ mf: number } | { yahoo: string });
+export type Source = { name: string; kind: Kind; category: string; about: string } & ({ mf: number } | { yahoo: string });
 
 // Your watchlist. Add any NSE symbol (".NS") or mfapi scheme code (search: api.mfapi.in/mf/search?q=...).
 export const watchlist: Source[] = [
@@ -132,5 +132,12 @@ export async function loadDetail(slug: string) {
   const s = watchlist.find((w) => slugOf(w.name) === slug);
   if (!s) return null;
   const { pts, meta } = await load(s);
+  return { instrument: metrics(s, pts), about: s.about, pts, meta };
+}
+
+// Same detail shape for any instrument in the market, on the watchlist or not.
+export async function loadAny(s: Source) {
+  const { pts, meta } = await load(s);
+  if (pts.length < 30) throw new Error("Not enough price history");
   return { instrument: metrics(s, pts), about: s.about, pts, meta };
 }
